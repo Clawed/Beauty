@@ -26,6 +26,11 @@
 		header("location: install.php"); exit;
 	}
 	
+	if($config->settings['maintenance'] != false)
+	{
+		die("In mainteance.");
+	}
+	
 	$db = new MySQLi($config->mysqli[0], $config->mysqli[1], $config->mysqli[2], $config->mysqli[3]);
 	if($db->connect_error)
 	{
@@ -38,10 +43,5 @@
 	
 	require_once "inc/class.core.php";
 	$core = new BeautyCore;
-	
-	if($config->settings['maintenance'] != false)
-	{
-		die("In mainteance.");
-	}
 
 ?>
