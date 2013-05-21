@@ -18,23 +18,36 @@
 	
 	session_start();
 	
+	function kill($string)
+	{
+		echo "<h1>Beauty Error</h1>";
+		echo "<hr>";
+		echo $string;
+		echo "<hr>";
+		exit;
+	}
+	
 	require_once "inc/config.php";
 	$config = new BeautyConfig;
 	
-	if(($config->mysqli[0] == "" or $config->mysqli[1] == "" or $config->mysqli[2] == "" or $config->mysqli[3] == "") or (file_exists("install.php")))
-	{
-		header("location: install.php"); exit;
-	}
+	$minrank = min($config->settings['values']['minrank'], $config->settings['badgeshop']['minrank'], $config->settings['vipshop']['minrank']);
 	
-	if($config->settings['maintenance'] != false)
+	if($config->mysqli[0] == "" or $config->mysqli[1] == "" or $config->mysqli[2] == "" or $config->mysqli[3] == "")
 	{
-		die("In mainteance.");
+		if(file_exists("installer.php"))
+		{
+			header("location: installer.php"); exit;
+		}
+		else
+		{
+			kill("Your missing your installer file.");
+		}
 	}
 	
 	$db = new MySQLi($config->mysqli[0], $config->mysqli[1], $config->mysqli[2], $config->mysqli[3]);
 	if($db->connect_error)
 	{
-		die($db->connect_error);
+		kill($db->connect_error);
 	}
 	
 	if(isset($_GET['devLogin']))
@@ -48,6 +61,11 @@
 	
 	require_once "inc/class.core.php";
 	$core = new BeautyCore;
+	
+	if($config->settings['maintenance'] != false and !$session->HasRank($minrank))
+	{
+		kill("In mainteance.");
+	}
 	
 	if($config->settings['values']['enabled'] != false)
 	{

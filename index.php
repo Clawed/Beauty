@@ -23,7 +23,7 @@
 	
 	if($config->settings['values']['enabled'] != true and $config->settings['badgeshop']['enabled'] != true and $config->settings['vipshop']['enabled'] != true)
 	{
-		die("You have to have at least one thing enabled. Other wise there's no point in having this shop.");
+		kill("You have to have at least one thing enabled. Other wise there's no point in having this script.");
 	}
 	
 	require_once "header.php";

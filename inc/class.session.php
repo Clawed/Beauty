@@ -25,7 +25,7 @@
 				if(!$this->ValidateUser($_SESSION['BASE']['USERNAME']))
 				{
 					session_destroy();
-					die("Unable to validate session username.");
+					kill("Unable to validate session username.");
 				}
 			}
 			elseif(isset($_SESSION['UBER_USER_N']))
@@ -51,7 +51,7 @@
 			}
 			else
 			{
-				die("No session.");
+				kill("No session.");
 			}
 		}
 		public function ValidateUser($username)
@@ -67,7 +67,7 @@
 			}
 			else
 			{
-				die($db->error);
+				kill($db->error);
 			}
 		}
 		public function HasRank($rank)
@@ -83,7 +83,7 @@
 			}
 			else
 			{
-				die($db->error);
+				kill($db->error);
 			}
 		}
 	}

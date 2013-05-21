@@ -33,7 +33,7 @@
 			}
 			else
 			{
-				die($db->error);
+				kill($db->error);
 			}
 		}
 		public function FilterInput($string)

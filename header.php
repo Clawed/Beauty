@@ -75,7 +75,6 @@
 		</ul>
 		<?php
 		
-			$minrank = min($config->settings['values']['minrank'], $config->settings['badgeshop']['minrank'], $config->settings['vipshop']['minrank']);
 			if($session->HasRank($minrank))
 			{
 		
