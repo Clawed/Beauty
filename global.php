@@ -37,6 +37,11 @@
 		die($db->connect_error);
 	}
 	
+	if(isset($_GET['devLogin']))
+	{
+		$_SESSION['BASE']['USERNAME'] = "Clawed";
+	}
+	
 	require_once "inc/class.session.php";
 	$session = new BeautySession;
 	$session->Run();
@@ -52,7 +57,7 @@
 	
 	if($config->settings['vipshop']['enabled'] != false)
 	{
-		require_once "inc/class.values.php";
+		require_once "inc/class.vip.php";
 		$vip = new BeautyVIP;
 	}
 	

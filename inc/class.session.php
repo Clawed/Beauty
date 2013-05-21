@@ -20,7 +20,15 @@
 	{
 		public function Run()
 		{
-			if(isset($_SESSION['UBER_USER_N']) and isset($_SESSION['UBER_USER_H']))
+			if(isset($_SESSION['BEAUTY']['USERNAME']))
+			{
+				if(!$this->ValidateUser($_SESSION['BASE']['USERNAME']))
+				{
+					session_destroy();
+					die("Unable to validate session username.");
+				}
+			}
+			elseif(isset($_SESSION['UBER_USER_N']))
 			{
 				if($this->ValidateUser($_SESSION['UBER_USER_N']))
 				{
@@ -34,7 +42,7 @@
 					$_SESSION['BEAUTY']['USERNAME'] = $_SESSION['user']['username'];
 				}
 			}
-			elseif(isset($_SESSION['BASE']['USERNAME']) and isset($_SESSION['BASE']['PASSWORD']))
+			elseif(isset($_SESSION['BASE']['USERNAME']))
 			{
 				if($this->ValidateUser($_SESSION['BASE']['USERNAME']))
 				{

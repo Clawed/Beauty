@@ -26,7 +26,7 @@
 		);
 		public $settings = array(
 			"sitename" => "Beauty", // Your site/hotel name
-			"path" => "http://127.0.0.1/Beauty", // Path to this, no final slash
+			"path" => "http://127.0.0.1/GitHub/Beauty", // Path to this, no final slash
 			"maintenance" => false, // true or false
 			"values" => array(
 				"enabled" => true, // true or false

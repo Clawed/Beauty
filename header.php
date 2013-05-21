@@ -24,6 +24,8 @@
 	<title><?php echo $config->settings['sitename']; ?> &raquo; <?php echo $page['title']; ?></title>
 	
 	<link type="text/css" rel="stylesheet" href="<?php echo $config->settings['path']; ?>/files/css/global.css" />
+	
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 
 </head>
 
