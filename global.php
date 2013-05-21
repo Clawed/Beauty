@@ -43,5 +43,23 @@
 	
 	require_once "inc/class.core.php";
 	$core = new BeautyCore;
+	
+	if($config->settings['values']['enabled'] != false)
+	{
+		require_once "inc/class.values.php";
+		$values = new BeautyValues;
+	}
+	
+	if($config->settings['vipshop']['enabled'] != false)
+	{
+		require_once "inc/class.values.php";
+		$vip = new BeautyVIP;
+	}
+	
+	if($config->settings['badgeshop']['enabled'] != false)
+	{
+		require_once "inc/class.badge.php";
+		$badge = new BeautyBadge;
+	}
 
 ?>
