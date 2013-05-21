@@ -11,6 +11,10 @@ body, a, input, select, textarea {
 	color: #666;
 }
 
+a:hover {
+	text-decoration: underline;
+}
+
 #margin-container {
 	width: 800px;
 	padding: 0 10px 0 10px;
@@ -22,6 +26,8 @@ body, a, input, select, textarea {
 	min-width: 820px;
 	height: 45px;
 	background-color: #666;
+	margin: 0 0 10px 0;
+	overflow-y: hidden;
 }
 
 #header-container ul#tabs {
@@ -50,6 +56,7 @@ body, a, input, select, textarea {
 	background-color: #fff;
 	padding: 10px 10px 8px 10px;
 	border-bottom: 2px solid #666;
+	text-decoration: none;
 }
 
 #header-container ul#tabs li.selected {
@@ -110,4 +117,66 @@ body, a, input, select, textarea {
 #header-container #staff-container:hover #staff-drop-container a:hover {
 	background-color: #666;
 	color: #fff;
+	text-decoration: none;
+}
+
+#wrapper-container {
+	width: 100%;
+	min-width: 820px;
+	overflow-y: hidden;
+}
+
+#wrapper-container #column1-container {
+	float: left;
+	width: 800px;
+}
+
+#wrapper-container #column2-container {
+	float: left;
+	width: 200px;
+}
+
+#wrapper-container #column3-container {
+	float: right;
+	width: 590px;
+}
+
+#wrapper-container .box-container {
+	display: block;
+	border: 1px solid #666;
+	border-bottom-width: 2px;
+	border-radius: 4px;
+	background-color: #fff;
+	margin: 0 0 10px 0;
+}
+
+#wrapper-container .box-container .head-container {
+	display: block;
+	margin: 5px 5px 5px 5px;
+	padding: 7px 10px 7px 10px;
+	border-radius: 4px;
+	font-size: 14px;
+	font-weight: bold;
+	background-color: #666;
+	color: #fff;
+}
+
+#wrapper-container .box-container .content-container {
+	display: block;
+	margin: 0 5px 5px 5px;
+}
+
+#wrapper-container .box-container .content-container .row {
+	display: block;
+	padding: 3px 5px 3px 5px;
+}
+
+#wrapper-container .box-container .content-container .row.selected {
+	font-weight: bold;
+}
+
+#footer-container {
+	width: 100%;
+	min-width: 820px;
+	overflow-y: hidden;
 }

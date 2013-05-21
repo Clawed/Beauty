@@ -22,6 +22,7 @@
 		{
 			return $this->FilterInput($_SERVER['HTTP_CF_CONNECTING_IP'] ? $_SERVER['HTTP_CF_CONNECTING_IP'] : $_SERVER['REMOTE_ADDR']);
 		}
+		
 		public function InsertLog($activity)
 		{
 			global $db;
@@ -36,6 +37,7 @@
 				kill($db->error);
 			}
 		}
+		
 		public function FilterInput($string)
 		{
 			global $db;

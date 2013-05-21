@@ -15,8 +15,8 @@
 	*/
 	
 	$page = array(
-		"title" => "Home",
-		"id" => "index"
+		"title" => "Rare Values",
+		"id" => "values"
 	);
 	
 	require_once "global.php";
@@ -27,22 +27,26 @@
 	}
 	
 	require_once "header.php";
+	
+	$cat = (($_GET['cat'] > 0) ? $core->FilterInput($_GET['cat']) : 0);
 
 ?>
 
 <div id="wrapper-container">
 	<div id="margin-container">
-		<div id="column1-container">
+		<div id="column2-container">
 			<div class="box-container">
-				<div class="head-container">Home</div>
+				<div class="head-container">Categories</div>
 				<div class="content-container">
-					Welcome to <strong>Beauty</strong>!
-					<br /><br />
-					Here with <strong>Beauty</strong> you can buy <strong>Badges</strong> & <strong>VIP</strong>!
-					<br />
-					You can also use Beauty to view your hotels <strong>Rare Values</strong>, with loads and loads of features involved!
-					<br />
-					You can view how many of these items are in the hotel, you can also view what items are where, eg: you just click the item & click rooms & it will tell youhow many of this item is in a certain room!
+					<?php echo $values->GetCategories($cat); ?>
+				</div>
+			</div>
+		</div>
+		<div id="column3-container">
+			<div class="box-container">
+				<div class="head-container"><?php echo $values->GetCategoryName($cat); ?></div>
+				<div class="content-container">
+					<?php echo $values->ListItemsFromCategory($cat); ?>
 				</div>
 			</div>
 		</div>

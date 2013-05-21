@@ -18,13 +18,13 @@
 	
 	session_start();
 	
-	function kill($string)
+	function kill($string, $noExit = false)
 	{
 		echo "<h1>Beauty Error</h1>";
 		echo "<hr>";
 		echo $string;
 		echo "<hr>";
-		exit;
+		if(!$noExit) exit;
 	}
 	
 	require_once "inc/config.php";

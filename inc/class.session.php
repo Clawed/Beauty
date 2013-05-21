@@ -54,6 +54,7 @@
 				kill("No session.");
 			}
 		}
+		
 		public function ValidateUser($username)
 		{
 			global $db;
@@ -70,6 +71,7 @@
 				kill($db->error);
 			}
 		}
+		
 		public function HasRank($rank)
 		{
 			global $db;
