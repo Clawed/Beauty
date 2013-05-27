@@ -88,17 +88,17 @@
 									}
 									else
 									{
-										return "No enough points";
+										return "Not enough points";
 									}
 								}
 								else
 								{
-									return "No enough pixels";
+									return "Not enough pixels";
 								}
 							}
 							else
 							{
-								return "No enough credits";
+								return "Not enough credits";
 							}
 						}
 						else
@@ -110,6 +110,94 @@
 					{
 						return "Fatel error while loading";
 					}
+				}
+				else
+				{
+					kill($db->error, true);
+				}
+			}
+			else
+			{
+				return "Fatal error while loading";
+			}
+		}
+		
+		public function AddBadge($name, $description, $credits, $pixels, $points, $badge, $amount)
+		{
+			global $db;
+			if(strlen($name) > 0)
+			{
+				if(strlen($description) > 0)
+				{
+					if(is_numeric($credits))
+					{
+						if(is_numeric($pixels))
+						{
+							if(is_numeric($points))
+							{
+								if(strlen($badge) > 0)
+								{
+									if(is_numeric($amount))
+									{
+										$stmt = $db->stmt_init();
+										if($stmt->prepare("INSERT INTO beauty_badges VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)"))
+										{
+											$stmt->bind_param("ssiiisi", $name, $description, $credits, $pixels, $points, $badge, $amount);
+											$stmt->execute();
+											$stmt->close();
+										}
+										else
+										{
+											kill($db->error, true);
+										}
+									}
+									else
+									{
+										return "Amount needs to be a number";
+									}
+								}
+								else
+								{
+									return "Badge needs to be longer than 0 characters in lenth";
+								}
+							}
+							else
+							{
+								return "Points needs to be a number";
+							}
+						}
+						else
+						{
+							return "Pixels needs to be a number";
+						}
+					}
+					else
+					{
+						return "Credits needs to be a number";
+					}
+				}
+				else
+				{
+					return "Description needs to be longer than 0 characters in lenth";
+				}
+			}
+			else
+			{
+				return "Name needs to be longer than 0 characters in lenth";
+			}
+		}
+		
+		public function RemoveBadge($id)
+		{
+			global $db;
+			if($id > 0)
+			{
+				$stmt = $db->stmt_init();
+				if($stmt->prepare("DELETE FROM beauty_badges WHERE id = ? LIMIT 1"))
+				{
+					$stmt->bind_param("i", $id);
+					$stmt->execute();
+					$stmt->close();
 				}
 				else
 				{
