@@ -46,50 +46,66 @@
 		public function GetCategoryName($id)
 		{
 			global $db;
-			$stmt = $db->stmt_init();
-			if($stmt->prepare("SELECT name FROM beauty_values_categories WHERE id = ? LIMIT 1"))
+			if($id > 0)
 			{
-				$stmt->bind_param("i", $id);
-				$stmt->bind_result($name);
-				$stmt->execute();
-				$stmt->fetch();
-				$stmt->close();
-				return $name;
+				$stmt = $db->stmt_init();
+				if($stmt->prepare("SELECT name FROM beauty_values_categories WHERE id = ? LIMIT 1"))
+				{
+					$stmt->bind_param("i", $id);
+					$stmt->bind_result($name);
+					$stmt->execute();
+					$stmt->store_result();
+					$count = $stmt->num_rows;
+					$stmt->fetch();
+					$stmt->close();
+					if($count > 0) return $name; else return "Category Doesn't Exist";
+				}
+				else
+				{
+					kill($db->error, true);
+				}
 			}
 			else
 			{
-				kill($db->error, true);
+				return "No Category Selected";
 			}
 		}
 		
 		public function ListItemsFromCategory($id)
 		{
 			global $db;
-			$stmt = $db->stmt_init();
-			if($stmt->prepare("SELECT name FROM beauty_values_items WHERE category_id = ?"))
+			if($id > 0)
 			{
-				$stmt->bind_param("i", $id);
-				$stmt->bind_result($name);
-				$stmt->execute();
-				$stmt->store_result();
-				$data = "";
-				if($stmt->num_rows > 0)
+				$stmt = $db->stmt_init();
+				if($stmt->prepare("SELECT name FROM beauty_values_items WHERE category_id = ?"))
 				{
-					while($stmt->fetch())
+					$stmt->bind_param("i", $id);
+					$stmt->bind_result($name);
+					$stmt->execute();
+					$stmt->store_result();
+					$data = "";
+					if($stmt->num_rows > 0)
 					{
-						$data .= $name;
+						while($stmt->fetch())
+						{
+							$data .= $name;
+						}
 					}
+					else
+					{
+						$data = "Nothing in this category yet!";
+					}
+					$stmt->close();
+					return $data;
 				}
 				else
 				{
-					$data = "Nothing in this category yet!";
+					kill($db->error, true);
 				}
-				$stmt->close();
-				return $data;
 			}
 			else
 			{
-				kill($db->error, true);
+				return "No Category Selected";
 			}
 		}
 	}
