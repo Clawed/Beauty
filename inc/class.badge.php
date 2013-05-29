@@ -60,10 +60,10 @@
 			if($id > 0)
 			{
 				$stmt = $db->stmt_init();
-				if($stmt->prepare("SELECT price_credits, price_pixels, price_vip_points, amount FROM beauty_badges WHERE id = ? LIMIT 1"))
+				if($stmt->prepare("SELECT price_credits, price_pixels, price_vip_points, amount, badge FROM beauty_badges WHERE id = ? LIMIT 1"))
 				{
 					$stmt->bind_param("i", $id);
-					$stmt->bind_result($credits, $pixels, $points, $amount);
+					$stmt->bind_result($credits, $pixels, $points, $amount, $badge);
 					$stmt->execute();
 					$stmt->store_result();
 					$count = $stmt->num_rows;
@@ -72,33 +72,62 @@
 					if($count > 0)
 					{
 						$stmt2 = $db->stmt_init();
-						if($stmt2->prepare("SELECT credits, activity_points, vip_points FROM server_users WHERE username = ? LIMIT 1"))
+						if($stmt2->prepare("SELECT credits, activity_points, vip_points, id FROM server_users WHERE username = ? LIMIT 1"))
 						{
 							$stmt2->bind_param("s", $_SESSION['BEAUTY']['USERNAME']);
-							$stmt2->bind_result($credits2, $pixels2, $points2);
+							$stmt2->bind_result($credits2, $pixels2, $points2, $userid);
 							$stmt2->execute();
 							$stmt2->fetch();
 							$stmt2->close();
-							if($credits2 > $credits)
+							if($amount > 0)
 							{
-								if($pixels2 > $pixels)
+								if($credits2 >= $credits)
 								{
-									if($points2 > $points)
+									if($pixels2 >= $pixels)
 									{
+										if($points2 >= $points)
+										{
+											$stmt3 = $db->stmt_init();
+											if($stmt3->prepare("INSERT INTO server_user_badges VALUES (?, ?, ?);"))
+											{
+												$stmt3->bind_param("isi", $userid, $badge, 0);
+												$stmt3->execute();
+												$stmt3->close();
+												$stmt4 = $db->stmt_init();
+												if($stmt4->prepare("UPDATE beauty_badges SET amount = amount - 1 WHERE id = ? LIMIT 1"))
+												{
+													$stmt4->bind_param("i", $id);
+													$stmt4->execute();
+													$stmt4->fetch();
+												}
+												else
+												{
+													kill($db->error, true);
+												}
+											}
+											else
+											{
+												kill($db->error, true);
+											}
+										}
+										else
+										{
+											return "Not enough points";
+										}
 									}
 									else
 									{
-										return "Not enough points";
+										return "Not enough pixels";
 									}
 								}
 								else
 								{
-									return "Not enough pixels";
+									return "Not enough credits";
 								}
 							}
 							else
 							{
-								return "Not enough credits";
+								return "None of this badge left to purchase";
 							}
 						}
 						else
@@ -158,7 +187,7 @@
 								}
 								else
 								{
-									return "Badge needs to be longer than 0 characters in lenth";
+									return "Badge needs to be longer than 0 characters in length";
 								}
 							}
 							else
@@ -178,12 +207,12 @@
 				}
 				else
 				{
-					return "Description needs to be longer than 0 characters in lenth";
+					return "Description needs to be longer than 0 characters in length";
 				}
 			}
 			else
 			{
-				return "Name needs to be longer than 0 characters in lenth";
+				return "Name needs to be longer than 0 characters in length";
 			}
 		}
 		

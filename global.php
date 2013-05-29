@@ -77,6 +77,25 @@
 	{
 		require_once "inc/class.vip.php";
 		$vip = new BeautyVIP;
+		
+		if($config->settings['ipn']['paypal']['enabled'] != false or $config->settings['ipn']['paygol']['enabled'] != false)
+		{
+			require_once "inc/class.ipns.php";
+			
+			if($config->settings['ipn']['paypal']['enabled'] != false)
+			{
+				$paypal = new BeautyPaypal;
+			}
+			
+			if($config->settings['ipn']['paygol']['enabled'] != false)
+			{
+				$paygol = new BeautyPaygol;
+			}
+		}
+		else
+		{
+			kill("You need atleast 1 IPN system enabled.");
+		}
 	}
 	
 	if($config->settings['badgeshop']['enabled'] != false)
